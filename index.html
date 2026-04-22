@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Desa Wisata Brayut - Pesona Budaya & Alam Sleman</title>
+    <!-- Font Awesome 6 (Free Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Swiper JS CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEFCF5;
+            color: #2C2A29;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a1a24;
+            color: #eaeaea;
+        }
+
+        body.dark-mode .stat-card,
+        body.dark-mode .package-card,
+        body.dark-mode .review-card,
+        body.dark-mode .news-card,
+        body.dark-mode .reservation-form,
+        body.dark-mode .about-img {
+            background-color: #2c2c38;
+            color: #f0f0f0;
+        }
+
+        body.dark-mode .section-title {
+            color: #c9b27c;
+        }
+
+        body.dark-mode .about-text p,
+        body.dark-mode .package-info p,
+        body.dark-mode .review-text {
+            color: #cfcfcf;
+        }
+
+        body.dark-mode nav {
+            background: rgba(30, 30, 40, 0.94);
+        }
+
+        body.dark-mode .nav-links a {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .stat-card i,
+        body.dark-mode .price {
+            color: #d99e5e;
+        }
+
+        body.dark-mode .stat-number {
+            color: #c9b27c;
+        }
+
+        body.dark-mode .reservation-form input,
+        body.dark-mode .reservation-form select,
+        body.dark-mode .reservation-form textarea {
+            background-color: #3a3a48;
+            border-color: #5a5a6e;
+            color: white;
+        }
+
+        h1,
+        h2,
+        h3,
+        .logo,
+        .nav-links a {
+            font-family: 'Playfair Display', serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #E9E2D4;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #8B6B4F;
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 252, 245, 0.94);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #2E5A3A, #B87C4F);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #3A2C24;
+            transition: 0.25s;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: #B87C4F;
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #3A2C24;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.55)), url('pict/wayang.JPG') center/cover no-repeat fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+            animation: fadeUp 1s ease-out;
+        }
+
+        .hero-content h1 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .btn-reserve {
+            background: #C17B4B;
+            border: none;
+            padding: 14px 42px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-reserve:hover {
+            background: #A56236;
+            transform: scale(1.05);
+            letter-spacing: 1px;
+        }
+
+        section {
+            padding: 100px 0;
+            overflow: hidden;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            font-family: 'Playfair Display', serif;
+            color: #2E5A3A;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background: #C17B4B;
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* About + Sejarah */
+        .about-grid {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .about-text {
+            flex: 1;
+            animation: slideLeft 0.8s;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #4F3B2C;
+        }
+
+        .about-text p {
+            line-height: 1.7;
+            color: #5A4A3A;
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-img {
+            flex: 1;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.15);
+            transition: 0.4s;
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .about-img:hover img {
+            transform: scale(1.03);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: white;
+            padding: 40px 20px;
+            border-radius: 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+        }
+
+        .stat-card i {
+            font-size: 3rem;
+            color: #C17B4B;
+            margin-bottom: 20px;
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 800;
+            font-family: 'Playfair Display', serif;
+            color: #2E5A3A;
+        }
+
+        /* Galeri */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 28px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 1 / 0.9;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: 0.4s ease;
+        }
+
+        .gallery-item:hover .overlay {
+            transform: translateY(0);
+        }
+
+        /* Swiper package */
+        .swiper {
+            width: 100%;
+            padding: 20px 0 50px;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            margin: 10px;
+        }
+
+        .package-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .package-info {
+            padding: 24px;
+        }
+
+        .price {
+            font-weight: 800;
+            color: #C17B4B;
+            font-size: 1.3rem;
+        }
+
+        /* Review */
+        .review-grid {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 40px;
+            padding: 30px;
+            max-width: 350px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .stars {
+            color: #FFB347;
+            margin-bottom: 15px;
+        }
+
+        /* Berita */
+        .news-grid {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            flex: 1;
+            transition: 0.3s;
+        }
+
+        .news-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        /* Form Reservasi */
+        .reservation-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 48px;
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #E0D6CC;
+            border-radius: 60px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        textarea {
+            border-radius: 28px;
+        }
+
+        button[type="submit"] {
+            background: #2E5A3A;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 60px;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Map Style */
+        #map {
+            height: 300px;
+            border-radius: 24px;
+            margin-top: 30px;
+            z-index: 1;
+        }
+
+        footer {
+            background: #1E2F28;
+            color: #DED4C5;
+            padding: 50px 0 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .social i {
+            font-size: 1.6rem;
+            margin-right: 20px;
+            color: #CBB290;
+            transition: 0.2s;
+        }
+
+        /* Floating Buttons */
+        .wa-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 65px;
+            font-size: 30px;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+        .wa-float:hover {
+            transform: scale(1.1);
+            background: #20b858;
+        }
+
+        #darkModeToggle {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: #2E5A3A;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 18px;
+            z-index: 999;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+        #darkModeToggle:hover {
+            background: #1e3f28;
+            transform: scale(1.05);
+        }
+
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 100px;
+            background: #C17B4B;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 18px;
+            display: none;
+            z-index: 999;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+        #scrollTopBtn:hover {
+            background: #a56236;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .about-grid {
+                flex-direction: column;
+            }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                background: #FFFBF2;
+                width: 80%;
+                height: 100vh;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 60px;
+                transition: 0.3s;
+                box-shadow: 5px 0 20px rgba(0, 0, 0, 0.1);
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            .stats-grid {
+                flex-direction: column;
+            }
+            #scrollTopBtn {
+                right: 20px;
+                bottom: 100px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 20px;
+            }
+            section {
+                padding: 70px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Brayut</div>
+            <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#gallery">Galeri</a></li>
+                <li><a href="#packages">Pengalaman</a></li>
+                <li><a href="#reviews">Ulasan</a></li>
+                <li><a href="#reservation">Reservasi</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Desa Wisata Brayut</h1>
+            <p>Harmoni Budaya Pertanian & Kearifan Lokal Yogyakarta</p>
+            <button class="btn-reserve"
+                onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})">Jelajahi Sekarang
+                <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </section>
+
+    <!-- Tentang & Sejarah -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">Tentang Brayut</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3>Pedusunan Asri di Sleman</h3>
+                    <p>Desa Wisata Brayut terletak di Dusun Brayut, Desa Pendowoharjo, Kecamatan Sleman, Kabupaten
+                        Sleman, Daerah Istimewa Yogyakarta. Berada pada ketinggian 243 mdpl dengan suhu rata-rata 26°C,
+                        kawasan ini menawarkan pemandangan persawahan luas dan kesejukan pedesaan. Sebagian besar
+                        penduduknya berprofesi sebagai petani, menjadikan aktivitas pertanian sebagai denyut nadi
+                        kehidupan sehari-hari.</p>
+                    <p>Perjalanan Brayut menjadi desa wisata dimulai pada tahun 1990 oleh Budi Utomo, seorang sarjana
+                        UGM yang kerap mengajak murid asingnya berinteraksi dengan warga. Pada 1999, didirikan Yayasan
+                        Ani-ani untuk mengembangkan wisata alternatif berbasis budaya dan pertanian. Kini, Brayut
+                        terkenal dengan pengalaman membajak sawah dengan kerbau, menanam padi, membatik, belajar
+                        gamelan, hingga menikmati matahari terbenam.</p>
+                    <p><strong>Akses:</strong> Dari Bandara Adisucipto, naik Trans Jogja ke terminal Jombor, lanjut bus
+                        Jogja-Tempel turun di Pasar Sleman, kemudian angkutan jalur D4. Jalan desa telah berkonblok rapi
+                        dengan kaca spion di pertigaan.</p>
+                </div>
+                <div class="about-img">
+                    <img src="pict/tentang.jpeg"
+                        alt="Sawah Desa Brayut">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistik -->
+    <section style="background: #F5EFE5;">
+        <div class="container">
+            <h2 class="section-title">Dampak & Prestasi</h2>
+            <div class="stats-grid">
+                <div class="stat-card"><i class="fas fa-users"></i>
+                    <div class="stat-number" data-target="3333">0</div>
+                    <div class="stat-label">Wisatawan / Tahun</div>
+                </div>
+                <div class="stat-card"><i class="fas fa-tractor"></i>
+                    <div class="stat-number" data-target="85">0</div>
+                    <div class="stat-label">Petani Lokal Aktif</div>
+                </div>
+                <div class="stat-card"><i class="fas fa-globe-asia"></i>
+                    <div class="stat-number" data-target="30">0</div>
+                    <div class="stat-label">Komunitas Asing</div>
+                </div>
+                <div class="stat-card"><i class="fas fa-chalkboard-user"></i>
+                    <div class="stat-number" data-target="15">0</div>
+                    <div class="stat-label">Workshop Budaya</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri Aktivitas -->
+    <section id="gallery">
+        <div class="container">
+            <h2 class="section-title">Momen di Brayut</h2>
+            <div class="gallery">
+                <div class="gallery-item"><img
+                        src="pict/membajak.JPG"
+                        alt="membajak sawah">
+                    <div class="overlay"><span>🐃 Membajak dengan Kerbau</span></div>
+                </div>
+                <div class="gallery-item"><img
+                        src="pict/wayang.JPG"
+                        alt="wayang">
+                    <div class="overlay"><span>🎨 Pertunjukan Wayang</span></div>
+                </div>
+                <div class="gallery-item"><img
+                        src="pict/menangkapikann.jpg"
+                        alt="menangkap ikan">
+                    <div class="overlay"><span>🥁 Menangkap Ikan</span></div>
+                </div>
+                <div class="gallery-item"><img
+                        src="pict/menanam.jpg"
+                        alt="masak tradisional">
+                    <div class="overlay"><span>🍲 Menanam Padi</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paket Wisata / Pengalaman -->
+    <section id="packages" style="background: #FEFCF5;">
+        <div class="container">
+            <h2 class="section-title">Pengalaman Kearifan Lokal</h2>
+            <div class="swiper packageSwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="package-card"><img
+                                src="pict/petani.jpg"
+                                alt="petani">
+                            <div class="package-info">
+                                <h3>Petani Sehari</h3>
+                                <p>Menanam padi, membajak sawah, panen</p>
+                                <div class="price">IDR 250K</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="package-card"><img
+                                src="pict/membatik.jpg"
+                                alt="batik">
+                            <div class="package-info">
+                                <h3>Batik & Gamelan</h3>
+                                <p>Workshop membatik + belajar gamelan</p>
+                                <div class="price">IDR 350K</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="package-card"><img
+                                src="pict/masak.jpg"
+                                alt="kuliner">
+                            <div class="package-info">
+                                <h3>Jelajah Rasa</h3>
+                                <p>Masak tradisional & makan bersama</p>
+                                <div class="price">IDR 200K</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="package-card"><img
+                                src="pict/sunset.jpg"
+                                alt="sunset">
+                            <div class="package-info">
+                                <h3>Sunset & Cerita</h3>
+                                <p>Piknik sawah + pemandangan senja</p>
+                                <div class="price">IDR 150K</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ulasan -->
+    <section id="reviews">
+        <div class="container">
+            <h2 class="section-title">Yang Mereka Katakan</h2>
+            <div class="review-grid">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Pengalaman membajak sawah dengan kerbau tak terlupakan! Penduduk ramah dan
+                        sangat otentik."</p>
+                    <h4>— Laura, Prancis</h4>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Belajar gamelan dan masak tradisional jadi favorit anak-anak. Brayut
+                        benar-benar desa wisata edukatif."</p>
+                    <h4>— Andini P.</h4>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★☆</div>
+                    <p class="review-text">"Akses mudah, suasana damai. Senja di sawah sangat romantis. Akan kembali!"
+                    </p>
+                    <h4>— Budi S.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Berita & Event -->
+    <section style="background:#F5EFE5;">
+        <div class="container">
+            <h2 class="section-title">Berita & Kegiatan</h2>
+            <div class="news-grid">
+                <div class="news-card"><img
+                        src="pict/lomba.jpg"
+                        alt="festival">
+                    <div class="news-content">
+                        <h3>Festival Ani-ani 2025</h3>
+                        <p>Lomba memanen padi, bazar UMKM, dan pentas seni budaya, 22-24 Agustus.</p>
+                    </div>
+                </div>
+                <div class="news-card"><img
+                        src="pict/jogja.jpg"
+                        alt="penghargaan">
+                    <div class="news-content">
+                        <h3>Desa Wisata Terbaik DIY</h3>
+                        <p>Brayut raih penghargaan inovasi wisata pertanian berkelanjutan 2024.</p>
+                    </div>
+                </div>
+                <div class="news-card"><img
+                        src="pict/mahasiswa.jpg"
+                        alt="eduwisata">
+                    <div class="news-content">
+                        <h3>Kelas Internasional</h3>
+                        <p>Mahasiswa asing rutin belajar budaya agraris di Brayut.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservasi + Peta Interaktif -->
+    <section id="reservation">
+        <div class="container">
+            <h2 class="section-title">Pesan Pengalamanmu</h2>
+            <div class="reservation-form">
+                <form id="bookingForm">
+                    <div class="form-group"><input type="text" placeholder="Nama Lengkap" required></div>
+                    <div class="form-group"><input type="email" placeholder="Email Aktif" required></div>
+                    <div class="form-group"><input type="tel" placeholder="No. WhatsApp"></div>
+                    <div class="form-group"><select>
+                            <option>Pilih Aktivitas</option>
+                            <option>Petani Sehari</option>
+                            <option>Batik & Gamelan</option>
+                            <option>Jelajah Rasa</option>
+                            <option>Sunset & Cerita</option>
+                        </select></div>
+                    <div class="form-group"><input type="date" placeholder="Tanggal Kunjungan"></div>
+                    <div class="form-group"><textarea rows="3"
+                            placeholder="Catatan khusus (alergi, kebutuhan khusus)"></textarea></div>
+                    <button type="submit">Kirim Reservasi <i class="fas fa-calendar-check"></i></button>
+                    <p style="font-size:0.8rem; text-align:center; margin-top:15px;">Tim kami akan konfirmasi dalam 1x24
+                        jam</p>
+                </form>
+            </div>
+            <!-- PETA INTERAKTIF -->
+            <div id="map"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3 style="color:#E8DBCB;">Desa Wisata Brayut</h3>
+                    <p>Kearifan lokal & kehangatan pedesaan</p>
+                </div>
+                <div><i class="fas fa-map-marker-alt"></i> Dusun Brayut, Pendowoharjo, Sleman, Yogyakarta<br><i
+                        class="fas fa-phone-alt"></i> +62 813 2854 6791</div>
+                <div class="social"><i class="fab fa-instagram"></i><i class="fab fa-facebook"></i><i
+                        class="fab fa-youtube"></i>
+                    <p>© 2025 Brayut, All rights reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOATING BUTTON -->
+    <a href="https://wa.me/6281328546791?text=Halo%20saya%20tertarik%20dengan%20Desa%20Wisata%20Brayut" 
+       class="wa-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- DARK MODE TOGGLE -->
+    <button id="darkModeToggle">🌙 Mode Gelap</button>
+
+    <!-- SCROLL TO TOP BUTTON -->
+    <button id="scrollTopBtn">⬆️ Atas</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // ==================== NAVIGATION MOBILE ====================
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
+
+        // ==================== COUNTER STATS ====================
+        const counters = document.querySelectorAll('.stat-number');
+        const speed = 180;
+        const startCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = parseFloat(counter.getAttribute('data-target'));
+                    let current = parseFloat(counter.innerText);
+                    const increment = target / speed;
+                    if (current < target) {
+                        let newVal = current + increment;
+                        if (target >= 1000) counter.innerText = Math.ceil(newVal);
+                        else counter.innerText = newVal.toFixed(0);
+                        setTimeout(updateCount, 20);
+                    } else {
+                        counter.innerText = target.toLocaleString();
+                    }
+                };
+                updateCount();
+            });
+        };
+        const statsSection = document.querySelector('#about + section');
+        let counted = false;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !counted) {
+                    startCounters();
+                    counted = true;
+                }
+            });
+        }, { threshold: 0.3 });
+        if (statsSection) observer.observe(statsSection);
+
+        // ==================== SWIPER CAROUSEL ====================
+        new Swiper('.packageSwiper', {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 20,
+            pagination: { el: '.swiper-pagination', clickable: true },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+        });
+
+        // ==================== FORM ALERT ====================
+        document.getElementById('bookingForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Terima kasih! Tim Desa Wisata Brayut akan segera menghubungi Anda.');
+            e.target.reset();
+        });
+
+        // ==================== PETA INTERAKTIF (LEAFLET) ====================
+        // Koordinat sekitar Dusun Brayut, Sleman (dekat dengan titik referensi)
+        const map = L.map('map').setView([-7.703, 110.355], 14);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; CartoDB',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+        L.marker([-7.703, 110.355]).addTo(map)
+            .bindPopup('<b>📍 Desa Wisata Brayut</b><br>Dusun Brayut, Pendowoharjo, Sleman, Yogyakarta')
+            .openPopup();
+
+        // ==================== DARK MODE TOGGLE ====================
+        const darkBtn = document.getElementById('darkModeToggle');
+        darkBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('brayut-theme', isDark ? 'dark' : 'light');
+            darkBtn.innerHTML = isDark ? '☀️ Mode Terang' : '🌙 Mode Gelap';
+            // Update peta tile layer biar lebih matching (opsional)
+            if (isDark) {
+                map.eachLayer(layer => {
+                    if (layer instanceof L.TileLayer) {
+                        map.removeLayer(layer);
+                    }
+                });
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; CartoDB',
+                    subdomains: 'abcd'
+                }).addTo(map);
+            } else {
+                map.eachLayer(layer => {
+                    if (layer instanceof L.TileLayer) {
+                        map.removeLayer(layer);
+                    }
+                });
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; CartoDB',
+                    subdomains: 'abcd'
+                }).addTo(map);
+            }
+        });
+        // Load saved theme
+        if (localStorage.getItem('brayut-theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            darkBtn.innerHTML = '☀️ Mode Terang';
+            // ubah tile map ke dark
+            setTimeout(() => {
+                map.eachLayer(layer => {
+                    if (layer instanceof L.TileLayer) {
+                        map.removeLayer(layer);
+                    }
+                });
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; CartoDB',
+                    subdomains: 'abcd'
+                }).addTo(map);
+            }, 100);
+        }
+
+        // ==================== SCROLL TO TOP BUTTON ====================
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        window.onscroll = () => {
+            if (window.scrollY > 300) {
+                scrollBtn.style.display = 'block';
+            } else {
+                scrollBtn.style.display = 'none';
+            }
+        };
+        scrollBtn.onclick = () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+    </script>
+</body>
+
+</html>
