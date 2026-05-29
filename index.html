@@ -31,18 +31,21 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Dark Mode Styles */
         body.dark-mode {
             background-color: #1a1a24;
             color: #eaeaea;
         }
 
         body.dark-mode .stat-card,
-        body.dark-mode .package-card,
         body.dark-mode .review-card,
         body.dark-mode .news-card,
+        body.dark-mode .article-card,
         body.dark-mode .reservation-form,
-        body.dark-mode .about-img {
+        body.dark-mode .about-img,
+        body.dark-mode .gallery-category,
+        body.dark-mode .layanan-card,
+        body.dark-mode .package-card,
+        body.dark-mode .homestay-card {
             background-color: #2c2c38;
             color: #f0f0f0;
         }
@@ -52,7 +55,6 @@
         }
 
         body.dark-mode .about-text p,
-        body.dark-mode .package-info p,
         body.dark-mode .review-text {
             color: #cfcfcf;
         }
@@ -109,7 +111,6 @@
             padding: 0 32px;
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -131,13 +132,24 @@
         }
 
         .logo {
-            font-size: 1.9rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.6rem;
             font-weight: 800;
             letter-spacing: -0.5px;
             background: linear-gradient(135deg, #2E5A3A, #B87C4F);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+        }
+
+        .logo i {
+            background: linear-gradient(135deg, #2E5A3A, #B87C4F);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.8rem;
         }
 
         .nav-links {
@@ -167,7 +179,6 @@
             color: #3A2C24;
         }
 
-        /* Hero Section */
         .hero {
             height: 100vh;
             min-height: 700px;
@@ -246,10 +257,9 @@
             transform: translateX(-50%);
         }
 
-        /* About + Sejarah */
-        .about-grid {
+        /* About Section dengan 2 Kolom Seimbang */
+        .about-wrapper {
             display: flex;
-            align-items: center;
             gap: 50px;
             flex-wrap: wrap;
         }
@@ -268,27 +278,64 @@
         .about-text p {
             line-height: 1.7;
             color: #5A4A3A;
-            font-size: 1.05rem;
+            font-size: 1rem;
             margin-bottom: 1rem;
+            text-align: justify;
         }
 
-        .about-img {
+        .about-gallery {
             flex: 1;
-            border-radius: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .about-img-main {
+            border-radius: 28px;
             overflow: hidden;
             box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.15);
             transition: 0.4s;
         }
 
-        .about-img img {
+        .about-img-main img {
             width: 100%;
             height: auto;
             display: block;
             transition: transform 0.5s;
         }
 
-        .about-img:hover img {
+        .about-img-main:hover img {
             transform: scale(1.03);
+        }
+
+        .about-img-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .about-img-grid-item {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .about-img-grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .about-img-grid-item img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .about-img-grid-item:hover img {
+            transform: scale(1.05);
         }
 
         /* Stats */
@@ -323,18 +370,67 @@
         }
 
         /* Galeri */
-        .gallery {
+        .gallery-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .gallery-tab {
+            padding: 10px 28px;
+            background: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            color: #5A4A3A;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .gallery-tab.active {
+            background: #C17B4B;
+            color: white;
+        }
+
+        .gallery-tab:hover:not(.active) {
+            background: #E9E2D4;
+            transform: translateY(-2px);
+        }
+
+        body.dark-mode .gallery-tab {
+            background: #2c2c38;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .gallery-tab.active {
+            background: #C17B4B;
+            color: white;
+        }
+
+        .gallery-category {
+            display: none;
+        }
+
+        .gallery-category.active-category {
+            display: block;
+        }
+
+        .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
         }
 
         .gallery-item {
             position: relative;
-            border-radius: 28px;
+            border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            aspect-ratio: 1 / 0.9;
+            aspect-ratio: 4 / 3;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
@@ -342,61 +438,339 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: transform 0.5s ease;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
-        .overlay {
+        .gallery-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
             padding: 20px;
             color: white;
             transform: translateY(100%);
-            transition: 0.4s ease;
+            transition: 0.3s ease;
         }
 
-        .gallery-item:hover .overlay {
+        .gallery-item:hover .gallery-overlay {
             transform: translateY(0);
         }
 
-        /* Swiper package */
-        .swiper {
+        /* Swiper Carousel */
+        .packageSwiper,
+        .homestaySwiper,
+        .layananSwiper {
             width: 100%;
-            padding: 20px 0 50px;
+            padding: 20px 0 60px;
         }
 
         .package-card {
             background: white;
-            border-radius: 32px;
+            border-radius: 28px;
             overflow: hidden;
-            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
             margin: 10px;
+            height: 100%;
+            min-height: 420px;
+            max-height: 420px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .package-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15);
         }
 
         .package-card img {
             width: 100%;
-            height: 220px;
+            height: 180px;
             object-fit: cover;
+            transition: transform 0.5s ease;
+            flex-shrink: 0;
+        }
+
+        .package-card:hover img {
+            transform: scale(1.03);
         }
 
         .package-info {
-            padding: 24px;
+            padding: 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 240px;
+        }
+
+        .package-info h3 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            color: #2E5A3A;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .package-info p {
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            font-size: 0.8rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .price {
+            font-size: 1.3rem;
             font-weight: 800;
             color: #C17B4B;
-            font-size: 1.3rem;
+            margin: 8px 0;
         }
 
-        /* Review */
+        .price small {
+            font-size: 0.7rem;
+            font-weight: normal;
+        }
+
+        .package-min {
+            color: #888;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .homestay-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin: 10px;
+            height: 100%;
+            min-height: 480px;
+            max-height: 480px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .homestay-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .homestay-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            flex-shrink: 0;
+        }
+
+        .homestay-card:hover img {
+            transform: scale(1.03);
+        }
+
+        .homestay-info {
+            padding: 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 280px;
+        }
+
+        .homestay-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            color: #2E5A3A;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .homestay-location {
+            color: #C17B4B;
+            font-size: 0.7rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .homestay-desc {
+            color: #666;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .homestay-price {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #C17B4B;
+            margin: 6px 0;
+        }
+
+        .homestay-price small {
+            font-size: 0.65rem;
+            font-weight: normal;
+        }
+
+        .homestay-facility {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #e0d6cc;
+        }
+
+        .homestay-facility span {
+            font-size: 0.6rem;
+            background: #F5EFE5;
+            padding: 3px 8px;
+            border-radius: 20px;
+            color: #5A4A3A;
+            white-space: nowrap;
+        }
+
+        .layanan-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #f0e8dc;
+            margin: 10px;
+            height: 100%;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .layanan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .layanan-header {
+            background: linear-gradient(135deg, #B87C4F, #C17B4B);
+            color: white;
+            padding: 16px 18px;
+        }
+
+        .layanan-header h3 {
+            font-size: 1.15rem;
+            margin-bottom: 3px;
+        }
+
+        .layanan-body {
+            padding: 16px;
+            flex-grow: 1;
+        }
+
+        .layanan-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #C17B4B;
+            margin-bottom: 8px;
+        }
+
+        .layanan-price small {
+            font-size: 0.75rem;
+            font-weight: normal;
+        }
+
+        .layanan-desc {
+            color: #666;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #e0d6cc;
+        }
+
+        body.dark-mode .layanan-card {
+            border-color: #3a3a48;
+        }
+
+        body.dark-mode .layanan-desc {
+            color: #aaa;
+            border-top-color: #4a4a5a;
+        }
+
+        body.dark-mode .package-info h3,
+        body.dark-mode .homestay-info h3 {
+            color: #c9b27c;
+        }
+
+        body.dark-mode .package-info p,
+        body.dark-mode .homestay-desc {
+            color: #aaa;
+        }
+
+        body.dark-mode .homestay-facility span {
+            background: #3a3a48;
+            color: #ccc;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #C17B4B;
+            background: rgba(255, 255, 255, 0.8);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background: #C17B4B;
+            color: white;
+        }
+
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .swiper-pagination-bullet {
+            background: #C17B4B;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: #2E5A3A;
+        }
+
+        body.dark-mode .swiper-button-next,
+        body.dark-mode .swiper-button-prev {
+            background: #2c2c38;
+            color: #C17B4B;
+        }
+
         .review-grid {
             display: flex;
             gap: 30px;
@@ -417,7 +791,6 @@
             margin-bottom: 15px;
         }
 
-        /* Berita */
         .news-grid {
             display: flex;
             gap: 30px;
@@ -442,7 +815,165 @@
             padding: 20px;
         }
 
-        /* Form Reservasi */
+        .single-article {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 40px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.2);
+        }
+
+        .article-card img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 32px;
+        }
+
+        .article-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            color: #2E5A3A;
+        }
+
+        .article-meta {
+            color: #C17B4B;
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-article {
+            display: inline-block;
+            background: #C17B4B;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-article:hover {
+            background: #A56236;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #FEFCF5;
+            margin: 3% auto;
+            padding: 30px;
+            border-radius: 18px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: fadeUp 0.4s;
+        }
+
+        body.dark-mode .modal-content {
+            background-color: #2c2c38;
+        }
+
+        .modal-content img {
+            width: 100%;
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+
+        .close-modal {
+            position: sticky;
+            top: 10px;
+            float: right;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #C17B4B;
+            background: rgba(255, 255, 240, 0.8);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .full-article {
+            line-height: 1.8;
+        }
+
+        .full-article h2 {
+            color: #2E5A3A;
+            margin: 20px 0 15px;
+            font-size: 1.8rem;
+        }
+
+        .full-article h3 {
+            color: #C17B4B;
+            margin: 20px 0 10px;
+            font-size: 1.3rem;
+        }
+
+        .full-article p {
+            margin-bottom: 16px;
+        }
+
+        .full-article ul {
+            margin: 15px 0 15px 25px;
+        }
+
+        .full-article li {
+            margin-bottom: 8px;
+        }
+
+        .full-article .hashtag {
+            color: #C17B4B;
+            font-weight: 500;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #e0d6cc;
+            word-wrap: break-word;
+        }
+
+        body.dark-mode .full-article h2 {
+            color: #c9b27c;
+        }
+
+        body.dark-mode .full-article .hashtag {
+            border-top-color: #4a4a5a;
+        }
+
         .reservation-form {
             max-width: 700px;
             margin: 0 auto;
@@ -469,7 +1000,7 @@
         }
 
         button[type="submit"] {
-            background: #2E5A3A;
+            background: #25D366;
             border: none;
             padding: 14px;
             width: 100%;
@@ -478,9 +1009,14 @@
             font-weight: bold;
             font-size: 1rem;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        /* Map Style */
+        button[type="submit"]:hover {
+            background: #20b858;
+            transform: scale(1.02);
+        }
+
         #map {
             height: 300px;
             border-radius: 24px;
@@ -508,7 +1044,6 @@
             transition: 0.2s;
         }
 
-        /* Floating Buttons */
         .wa-float {
             position: fixed;
             bottom: 20px;
@@ -523,11 +1058,6 @@
             font-size: 30px;
             z-index: 999;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-        }
-        .wa-float:hover {
-            transform: scale(1.1);
-            background: #20b858;
         }
 
         #darkModeToggle {
@@ -541,13 +1071,6 @@
             padding: 12px 18px;
             z-index: 999;
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-        }
-        #darkModeToggle:hover {
-            background: #1e3f28;
-            transform: scale(1.05);
         }
 
         #scrollTopBtn {
@@ -562,12 +1085,17 @@
             display: none;
             z-index: 999;
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
         }
-        #scrollTopBtn:hover {
-            background: #a56236;
+
+        .paket-badge {
+            display: inline-block;
+            background: #C17B4B;
+            color: white;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            font-size: 1rem;
         }
 
         @keyframes fadeUp {
@@ -575,6 +1103,7 @@
                 opacity: 0;
                 transform: translateY(40px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -586,6 +1115,7 @@
                 opacity: 0;
                 transform: translateX(-50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -593,9 +1123,10 @@
         }
 
         @media (max-width: 992px) {
-            .about-grid {
+            .about-wrapper {
                 flex-direction: column;
             }
+
             .nav-links {
                 position: fixed;
                 top: 70px;
@@ -607,23 +1138,37 @@
                 align-items: center;
                 padding-top: 60px;
                 transition: 0.3s;
-                box-shadow: 5px 0 20px rgba(0, 0, 0, 0.1);
+                z-index: 999;
             }
+
             .nav-links.active {
                 left: 0;
             }
+
             .menu-toggle {
                 display: block;
             }
+
             .hero-content h1 {
                 font-size: 2.8rem;
             }
+
             .stats-grid {
                 flex-direction: column;
             }
+
             #scrollTopBtn {
                 right: 20px;
                 bottom: 100px;
+            }
+
+            .article-card img {
+                height: 250px;
+            }
+
+            .homestay-card {
+                min-height: 520px;
+                max-height: 520px;
             }
         }
 
@@ -631,8 +1176,19 @@
             .container {
                 padding: 0 20px;
             }
+
             section {
                 padding: 70px 0;
+            }
+
+            .homestay-card {
+                min-height: 500px;
+                max-height: 500px;
+            }
+
+            .package-card {
+                min-height: 400px;
+                max-height: 400px;
             }
         }
     </style>
@@ -642,13 +1198,17 @@
 
     <nav>
         <div class="nav-container">
-            <div class="logo">Brayut</div>
+            <div class="logo">
+                <i class="fas fa-tree"></i>
+                <span>Brayut</span>
+            </div>
             <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Beranda</a></li>
                 <li><a href="#about">Tentang</a></li>
                 <li><a href="#gallery">Galeri</a></li>
-                <li><a href="#packages">Pengalaman</a></li>
+                <li><a href="#packages">Paket Wisata</a></li>
+                <li><a href="#homestay">Homestay</a></li>
                 <li><a href="#reviews">Ulasan</a></li>
                 <li><a href="#reservation">Reservasi</a></li>
             </ul>
@@ -666,30 +1226,36 @@
         </div>
     </section>
 
-    <!-- Tentang & Sejarah -->
+    <!-- TENTANG BRAYUT - DENGAN TULISAN DAN GAMBOR SETARA -->
     <section id="about">
         <div class="container">
             <h2 class="section-title">Tentang Brayut</h2>
-            <div class="about-grid">
+            <div class="about-wrapper">
                 <div class="about-text">
                     <h3>Pedusunan Asri di Sleman</h3>
-                    <p>Desa Wisata Brayut terletak di Dusun Brayut, Desa Pendowoharjo, Kecamatan Sleman, Kabupaten
-                        Sleman, Daerah Istimewa Yogyakarta. Berada pada ketinggian 243 mdpl dengan suhu rata-rata 26°C,
-                        kawasan ini menawarkan pemandangan persawahan luas dan kesejukan pedesaan. Sebagian besar
-                        penduduknya berprofesi sebagai petani, menjadikan aktivitas pertanian sebagai denyut nadi
-                        kehidupan sehari-hari.</p>
-                    <p>Perjalanan Brayut menjadi desa wisata dimulai pada tahun 1990 oleh Budi Utomo, seorang sarjana
-                        UGM yang kerap mengajak murid asingnya berinteraksi dengan warga. Pada 1999, didirikan Yayasan
-                        Ani-ani untuk mengembangkan wisata alternatif berbasis budaya dan pertanian. Kini, Brayut
-                        terkenal dengan pengalaman membajak sawah dengan kerbau, menanam padi, membatik, belajar
-                        gamelan, hingga menikmati matahari terbenam.</p>
-                    <p><strong>Akses:</strong> Dari Bandara Adisucipto, naik Trans Jogja ke terminal Jombor, lanjut bus
-                        Jogja-Tempel turun di Pasar Sleman, kemudian angkutan jalur D4. Jalan desa telah berkonblok rapi
-                        dengan kaca spion di pertigaan.</p>
+                    <p>Desa Wisata Brayut merupakan sebuah wisata alternatif yang saat ini sedang digandrungi para wisatawan baik manca maupun domestic. Keindahan sawah yang semakin sulit ditemukan di banyak kota di Indonesia. Sawah-sawah mulai tertutup aspal, beton atau bangunan-bangunan pencakar langit. Di Desa Brayut, sawah ditawarkan untuk bermain, melepas lelah dan belajar menghargai kerja keras. Karpet padi yang membentang luas bisa anda ciptakan di sini. Mulai dari membajak sawah dengan bajak yang ditarik oleh sapi, atau menanam padi sambil bermain lumpur.</p>
+                    <p>Perjalanan Brayut menjadi desa wisata dimulai oleh Budi Utomo, seorang sarjana UGM yang kerap mengajak murid asingnya berinteraksi dengan warga. Pada 1999, didirikan Yayasan Ani-ani untuk mengembangkan wisata alternatif berbasis budaya dan pertanian. Kini, Brayut terkenal dengan pengalaman membajak sawah dengan sapi, menanam padi, membatik, belajar gamelan, hingga menikmati matahari terbenam.</p>
+                    <p>Banyak yang bisa dinikmati oleh para wisatawan di Desa Wisata Brayut. Wisata Edukasi merupakan paket yang disajikan oleh Desa Wisata Brayut, seperti : Belajar Bertani, Belajar Membatik, Belajar Karawitan (gamelan), Belajar Kerajinan Janur, Belajar Tari-tari tradisional, Menangkap Ikan, Seni pertunjukan Jathilan (kuda lumping), dan masih banyak macam paket kegiatan wisata yang lainnya.</p>
+                    <p><strong>📍 Lokasi:</strong> Jln. Notosukardjo-Brayut, Brayut, Kelurahan Pandowoharjo, Kapanewon Sleman, Kabupaten Sleman, Yogyakarta.</p>
                 </div>
-                <div class="about-img">
-                    <img src="pict/tentang.jpeg"
-                        alt="Sawah Desa Brayut">
+                <div class="about-gallery">
+                    <div class="about-img-main">
+                        <img src="pict/tentang.jpeg" alt="Suasana Desa Brayut">
+                    </div>
+                    <div class="about-img-grid">
+                        <div class="about-img-grid-item">
+                            <img src="pict/membajak.JPG" alt="Membajak sawah dengan sapi">
+                        </div>
+                        <div class="about-img-grid-item">
+                            <img src="pict/menanam.jpg" alt="Menanam padi di sawah">
+                        </div>
+                        <div class="about-img-grid-item">
+                            <img src="pict/membatik.jpg" alt="Kegiatan membatik">
+                        </div>
+                        <div class="about-img-grid-item">
+                            <img src="pict/sunset.jpg" alt="Sunset di persawahan">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -720,89 +1286,123 @@
         </div>
     </section>
 
-    <!-- Galeri Aktivitas -->
+    <!-- GALERI -->
     <section id="gallery">
         <div class="container">
-            <h2 class="section-title">Momen di Brayut</h2>
-            <div class="gallery">
-                <div class="gallery-item"><img
-                        src="pict/membajak.JPG"
-                        alt="membajak sawah">
-                    <div class="overlay"><span>🐃 Membajak dengan Kerbau</span></div>
+            <h2 class="section-title">📸 Galeri Momen di Brayut</h2>
+            <div class="gallery-tabs">
+                <button class="gallery-tab active" data-category="semua">Semua</button>
+                <button class="gallery-tab" data-category="pertanian">Pertanian</button>
+                <button class="gallery-tab" data-category="budaya">Budaya & Seni</button>
+                <button class="gallery-tab" data-category="kuliner">Kuliner</button>
+                <button class="gallery-tab" data-category="alam">Alam & Suasana</button>
+            </div>
+            <div class="gallery-category active-category" id="gallery-semua">
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="pict/membajak.JPG" alt="Membajak sawah"><div class="gallery-overlay"><span><i class="fas fa-tractor"></i> Membajak dengan Sapi</span></div></div>
+                    <div class="gallery-item"><img src="pict/wayang.JPG" alt="Wayang"><div class="gallery-overlay"><span><i class="fas fa-mask"></i> Pertunjukan Wayang</span></div></div>
+                    <div class="gallery-item"><img src="pict/menangkapikann.jpg" alt="Menangkap Ikan"><div class="gallery-overlay"><span><i class="fas fa-fish"></i> Menangkap Ikan</span></div></div>
+                    <div class="gallery-item"><img src="pict/menanam.jpg" alt="Menanam Padi"><div class="gallery-overlay"><span><i class="fas fa-seedling"></i> Menanam Padi</span></div></div>
+                    <div class="gallery-item"><img src="pict/membatik.jpg" alt="Membatik"><div class="gallery-overlay"><span><i class="fas fa-paintbrush"></i> Workshop Membatik</span></div></div>
+                    <div class="gallery-item"><img src="pict/masak.jpg" alt="Masak Tradisional"><div class="gallery-overlay"><span><i class="fas fa-utensils"></i> Masak Tradisional</span></div></div>
+                    <div class="gallery-item"><img src="pict/sunset.jpg" alt="Sunset"><div class="gallery-overlay"><span><i class="fas fa-sun"></i> Sunset di Sawah</span></div></div>
+                    <div class="gallery-item"><img src="pict/petani.jpg" alt="Petani"><div class="gallery-overlay"><span><i class="fas fa-user-friends"></i> Aktivitas Petani</span></div></div>
+                    <div class="gallery-item"><img src="pict/lomba.jpg" alt="Festival"><div class="gallery-overlay"><span><i class="fas fa-calendar-alt"></i> Festival Ani-ani</span></div></div>
                 </div>
-                <div class="gallery-item"><img
-                        src="pict/wayang.JPG"
-                        alt="wayang">
-                    <div class="overlay"><span>🎨 Pertunjukan Wayang</span></div>
+            </div>
+            <div class="gallery-category" id="gallery-pertanian">
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="pict/membajak.JPG" alt="Membajak"><div class="gallery-overlay"><span><i class="fas fa-tractor"></i> Membajak Sawah</span></div></div>
+                    <div class="gallery-item"><img src="pict/menanam.jpg" alt="Menanam"><div class="gallery-overlay"><span><i class="fas fa-seedling"></i> Menanam Padi</span></div></div>
+                    <div class="gallery-item"><img src="pict/petani.jpg" alt="Petani"><div class="gallery-overlay"><span><i class="fas fa-user-friends"></i> Petani Lokal</span></div></div>
                 </div>
-                <div class="gallery-item"><img
-                        src="pict/menangkapikann.jpg"
-                        alt="menangkap ikan">
-                    <div class="overlay"><span>🥁 Menangkap Ikan</span></div>
+            </div>
+            <div class="gallery-category" id="gallery-budaya">
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="pict/wayang.JPG" alt="Wayang"><div class="gallery-overlay"><span><i class="fas fa-mask"></i> Wayang Kulit</span></div></div>
+                    <div class="gallery-item"><img src="pict/membatik.jpg" alt="Membatik"><div class="gallery-overlay"><span><i class="fas fa-paintbrush"></i> Belajar Membatik</span></div></div>
+                    <div class="gallery-item"><img src="pict/mahasiswa.jpg" alt="Mahasiswa"><div class="gallery-overlay"><span><i class="fas fa-graduation-cap"></i> Kunjungan Mahasiswa</span></div></div>
                 </div>
-                <div class="gallery-item"><img
-                        src="pict/menanam.jpg"
-                        alt="masak tradisional">
-                    <div class="overlay"><span>🍲 Menanam Padi</span></div>
+            </div>
+            <div class="gallery-category" id="gallery-kuliner">
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="pict/masak.jpg" alt="Masak"><div class="gallery-overlay"><span><i class="fas fa-utensils"></i> Memasak Tradisional</span></div></div>
+                    <div class="gallery-item"><img src="pict/menangkapikann.jpg" alt="Ikan"><div class="gallery-overlay"><span><i class="fas fa-fish"></i> Hasil Tangkapan Ikan</span></div></div>
+                </div>
+            </div>
+            <div class="gallery-category" id="gallery-alam">
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="pict/sunset.jpg" alt="Sunset"><div class="gallery-overlay"><span><i class="fas fa-sun"></i> Senja di Persawahan</span></div></div>
+                    <div class="gallery-item"><img src="pict/tentang.jpeg" alt="Sawah"><div class="gallery-overlay"><span><i class="fas fa-tree"></i> Hamparan Sawah</span></div></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Paket Wisata / Pengalaman -->
+    <!-- PAKET WISATA 2026 -->
     <section id="packages" style="background: #FEFCF5;">
         <div class="container">
-            <h2 class="section-title">Pengalaman Kearifan Lokal</h2>
+            <h2 class="section-title">✨ Paket Wisata 2026</h2>
+            <p style="text-align: center; margin-bottom: 20px; color: #C17B4B; font-weight: 500;">
+                <i class="fas fa-tags"></i> Update harga terbaru Tahun 2026
+            </p>
+            <div style="text-align: center;">
+                <span class="paket-badge"><i class="fas fa-leaf"></i> PAKET DESA WISATA</span>
+            </div>
             <div class="swiper packageSwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="package-card"><img
-                                src="pict/petani.jpg"
-                                alt="petani">
-                            <div class="package-info">
-                                <h3>Petani Sehari</h3>
-                                <p>Menanam padi, membajak sawah, panen</p>
-                                <div class="price">IDR 250K</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="package-card"><img
-                                src="pict/membatik.jpg"
-                                alt="batik">
-                            <div class="package-info">
-                                <h3>Batik & Gamelan</h3>
-                                <p>Workshop membatik + belajar gamelan</p>
-                                <div class="price">IDR 350K</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="package-card"><img
-                                src="pict/masak.jpg"
-                                alt="kuliner">
-                            <div class="package-info">
-                                <h3>Jelajah Rasa</h3>
-                                <p>Masak tradisional & makan bersama</p>
-                                <div class="price">IDR 200K</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="package-card"><img
-                                src="pict/sunset.jpg"
-                                alt="sunset">
-                            <div class="package-info">
-                                <h3>Sunset & Cerita</h3>
-                                <p>Piknik sawah + pemandangan senja</p>
-                                <div class="price">IDR 150K</div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/menanam.jpg" alt="Belajar Media Menanam"><div class="package-info"><h3>🌱 Belajar Media Menanam</h3><p>Belajar teknik menanam dengan media ramah lingkungan</p><div class="price">Rp 4.000 <small>/orang</small></div><div class="package-min"><i class="fas fa-users"></i> Minimal 20 peserta</div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/petani.jpg" alt="Pertanian"><div class="package-info"><h3>🌾 Pertanian</h3><p>Pengalaman langsung bertani di sawah bersama petani lokal</p><div class="price">Rp 15.000 <small>/orang</small></div><div class="package-min"><i class="fas fa-users"></i> Minimal 30 peserta</div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/menangkapikann.jpg" alt="Tangkap Ikan"><div class="package-info"><h3>🐟 Tangkap Ikan</h3><p>Seru! Menangkap ikan langsung di sawah dengan cara tradisional</p><div class="price">Rp 10.000 <small>/orang</small></div><div class="package-min"><i class="fas fa-users"></i> Minimal 25 peserta</div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/lomba.jpg" alt="Permainan Tradisional"><div class="package-info"><h3>🎯 Permainan Tradisional</h3><p>Meriahkan suasana dengan berbagai permainan tradisional</p><div class="price">Rp 5.000 <small>/orang</small></div><div class="package-min"><i class="fas fa-users"></i> Minimal 15 peserta</div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/membatik.jpg" alt="Membatik"><div class="package-info"><h3>🖌️ Membatik</h3><p>Belajar membatik dengan motif khas Yogyakarta</p><div class="price">Rp 40.000 <small>/orang</small></div><div class="package-min"><i class="fas fa-users"></i> Minimal 15 peserta</div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/wayang.JPG" alt="Belajar Tari"><div class="package-info"><h3>💃 Belajar Tari Tradisional</h3><p>Pelajari gerakan tari klasik Jawa dari instruktur berpengalaman</p><div class="price">Rp 10.000 <small>/orang</small></div><div class="package-min"><i class="fas fa-users"></i> Minimal 15 peserta</div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/wayang.JPG" alt="Belajar Karawitan"><div class="package-info"><h3>🎵 Belajar Karawitan</h3><p>Belajar memainkan gamelan dan musik tradisional Jawa</p><div class="price">Rp 10.000 <small>/orang</small></div><div class="package-min"><i class="fas fa-users"></i> Minimal 15 peserta</div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/sunset.jpg" alt="Jalan-jalan Desa"><div class="package-info"><h3>🚶 Jalan-jalan Desa</h3><p>Jelajahi keindahan pedesaan dan interaksi dengan penduduk lokal</p><div class="price">Rp 3.000 <small>/orang</small></div><div class="package-min"><i class="fas fa-users"></i> Minimal 15 peserta</div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/masak.jpg" alt="Masak Tradisional"><div class="package-info"><h3>🍳 Masak Tradisional</h3><p>Belajar memasak hidangan tradisional yang lezat</p><div class="price">Rp 10.000 - 13.000</div><div class="package-min"><i class="fas fa-users"></i> Minimal 30 peserta</div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/membajak.JPG" alt="Kuda Lumping"><div class="package-info"><h3>🐎 Pertunjukan Kuda Lumping</h3><p>Saksikan kesenian kuda lumping yang memukau</p><div class="price">Rp 1.000.000 <small>/1 babak</small></div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/tentang.jpeg" alt="Naik Gerobak"><div class="package-info"><h3>🚜 Naik Gerobak</h3><p>Nikmati sensasi naik gerobak keliling desa</p><div class="price">Rp 350.000 <small>/gerobak</small></div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/menangkapikann.jpg" alt="Telur Asin"><div class="package-info"><h3>🥚 Pembuatan Telur Asin</h3><p>Belajar proses pembuatan telur asin khas desa</p><div class="price">Rp 7.000 <small>/orang</small></div><div class="package-min"><i class="fas fa-users"></i> Minimal 15 peserta</div></div></div></div>
+                    <div class="swiper-slide"><div class="package-card"><img src="pict/petani.jpg" alt="Susu Sapi"><div class="package-info"><h3>🥛 Pembuatan Susu Sapi Kemasan</h3><p>Belajar proses pengolahan susu sapi segar menjadi produk kemasan</p><div class="price">Rp 15.000 <small>/250ml</small></div><div class="package-min"><i class="fas fa-users"></i> Minimal 15 peserta</div></div></div></div>
                 </div>
-                <div class="swiper-pagination"></div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <!-- LAYANAN TAMBAHAN - CAROUSEL -->
+            <div style="margin-top: 60px;">
+                <div style="text-align: center;">
+                    <span class="paket-badge" style="background: #2E5A3A;"><i class="fas fa-plus-circle"></i> LAYANAN TAMBAHAN</span>
+                </div>
+                <div class="swiper layananSwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><div class="layanan-card"><div class="layanan-header"><h3><i class="fas fa-landmark"></i> Kas Desa Wisata</h3></div><div class="layanan-body"><div class="layanan-price">Rp 6.000 <small>/orang</small></div><div class="layanan-desc"><i class="fas fa-check-circle"></i> Wajib untuk setiap pengunjung</div></div></div></div>
+                        <div class="swiper-slide"><div class="layanan-card"><div class="layanan-header"><h3><i class="fas fa-utensils"></i> Makan Siang</h3></div><div class="layanan-body"><div class="layanan-price">Mulai Rp 18.000</div><div class="layanan-desc"><i class="fas fa-leaf"></i> Menu tradisional Nusantara</div></div></div></div>
+                        <div class="swiper-slide"><div class="layanan-card"><div class="layanan-header"><h3><i class="fas fa-cookie-bite"></i> Snack</h3></div><div class="layanan-body"><div class="layanan-price">Mulai Rp 7.000</div><div class="layanan-desc"><i class="fas fa-coffee"></i> Camilan khas desa</div></div></div></div>
+                        <div class="swiper-slide"><div class="layanan-card"><div class="layanan-header"><h3><i class="fas fa-home"></i> Sewa Joglo</h3></div><div class="layanan-body"><div class="layanan-price">Rp 350.000</div><div class="layanan-desc"><i class="fas fa-music"></i> Termasuk sound system</div></div></div></div>
+                        <div class="swiper-slide"><div class="layanan-card"><div class="layanan-header"><h3><i class="fas fa-broom"></i> Uang Kebersihan</h3></div><div class="layanan-body"><div class="layanan-price">Rp 100.000</div><div class="layanan-desc"><i class="fas fa-exclamation-triangle"></i> Jika membawa makanan dari luar</div></div></div></div>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOMESTAY -->
+    <section id="homestay" style="background: #F5EFE5;">
+        <div class="container">
+            <h2 class="section-title">🏠 Homestay Nyaman di Brayut</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: #C17B4B; font-weight: 500;">
+                <i class="fas fa-bed"></i> Menginap di homestay tradisional dengan harga terjangkau
+            </p>
+            <div class="swiper homestaySwiper">
+                <div class="swiper-wrapper" id="homestayWrapper"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
             </div>
         </div>
     </section>
@@ -812,132 +1412,94 @@
         <div class="container">
             <h2 class="section-title">Yang Mereka Katakan</h2>
             <div class="review-grid">
-                <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="review-text">"Pengalaman membajak sawah dengan kerbau tak terlupakan! Penduduk ramah dan
-                        sangat otentik."</p>
-                    <h4>— Laura, Prancis</h4>
-                </div>
-                <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="review-text">"Belajar gamelan dan masak tradisional jadi favorit anak-anak. Brayut
-                        benar-benar desa wisata edukatif."</p>
-                    <h4>— Andini P.</h4>
-                </div>
-                <div class="review-card">
-                    <div class="stars">★★★★☆</div>
-                    <p class="review-text">"Akses mudah, suasana damai. Senja di sawah sangat romantis. Akan kembali!"
-                    </p>
-                    <h4>— Budi S.</h4>
-                </div>
+                <div class="review-card"><div class="stars">★★★★★</div><p>"Pengalaman membajak sawah tak terlupakan! Penduduk ramah."</p><h4>— Laura, Prancis</h4></div>
+                <div class="review-card"><div class="stars">★★★★★</div><p>"Belajar gamelan dan masak tradisional jadi favorit anak-anak."</p><h4>— Andini P.</h4></div>
+                <div class="review-card"><div class="stars">★★★★☆</div><p>"Akses mudah, suasana damai. Senja di sawah romantis!"</p><h4>— Budi S.</h4></div>
             </div>
         </div>
     </section>
 
-    <!-- Berita & Event -->
+    <!-- Berita -->
     <section style="background:#F5EFE5;">
         <div class="container">
             <h2 class="section-title">Berita & Kegiatan</h2>
             <div class="news-grid">
-                <div class="news-card"><img
-                        src="pict/lomba.jpg"
-                        alt="festival">
-                    <div class="news-content">
-                        <h3>Festival Ani-ani 2025</h3>
-                        <p>Lomba memanen padi, bazar UMKM, dan pentas seni budaya, 22-24 Agustus.</p>
-                    </div>
-                </div>
-                <div class="news-card"><img
-                        src="pict/jogja.jpg"
-                        alt="penghargaan">
-                    <div class="news-content">
-                        <h3>Desa Wisata Terbaik DIY</h3>
-                        <p>Brayut raih penghargaan inovasi wisata pertanian berkelanjutan 2024.</p>
-                    </div>
-                </div>
-                <div class="news-card"><img
-                        src="pict/mahasiswa.jpg"
-                        alt="eduwisata">
-                    <div class="news-content">
-                        <h3>Kelas Internasional</h3>
-                        <p>Mahasiswa asing rutin belajar budaya agraris di Brayut.</p>
+                <div class="news-card"><img src="pict/lomba.jpg" alt="festival"><div class="news-content"><h3>Festival Ani-ani 2025</h3><p>Lomba memanen padi, bazar UMKM, pentas seni budaya, 22-24 Agustus.</p></div></div>
+                <div class="news-card"><img src="pict/jogja.jpg" alt="penghargaan"><div class="news-content"><h3>Desa Wisata Terbaik DIY</h3><p>Brayut raih penghargaan inovasi wisata pertanian berkelanjutan 2024.</p></div></div>
+                <div class="news-card"><img src="pict/mahasiswa.jpg" alt="eduwisata"><div class="news-content"><h3>Kelas Internasional</h3><p>Mahasiswa asing rutin belajar budaya agraris di Brayut.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARTIKEL UNY -->
+    <section id="artikel-uny">
+        <div class="container">
+            <h2 class="section-title">📚 Artikel Universitas Negeri Yogyakarta</h2>
+            <div class="single-article">
+                <div class="article-card" id="mainArticle">
+                    <img src="pict/artikel.jpeg" alt="Mahasiswa UNY">
+                    <div class="article-content">
+                        <div class="article-meta"><span><i class="far fa-calendar-alt"></i> Mei 2026</span><span><i class="fas fa-graduation-cap"></i> Pendidikan Sosiologi UNY</span></div>
+                        <h3>Mahasiswa Pendidikan Sosiologi UNY Wujudkan Aksi Sosial: Digitalisasi Desa Wisata Brayut Melalui Website</h3>
+                        <p><strong>Brayut, Yogyakarta</strong> – Dalam upaya mendukung pencapaian SDGs Desa 18, mahasiswa UNY telah meluncurkan website resmi untuk Desa Wisata Brayut...</p>
+                        <button class="btn-article" id="readMoreBtn">Baca Selengkapnya →</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Reservasi + Peta Interaktif -->
+    <!-- MODAL ARTIKEL -->
+    <div id="articleModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modalBody" class="full-article"></div>
+        </div>
+    </div>
+
+    <!-- Reservasi -->
     <section id="reservation">
         <div class="container">
             <h2 class="section-title">Pesan Pengalamanmu</h2>
             <div class="reservation-form">
                 <form id="bookingForm">
-                    <div class="form-group"><input type="text" placeholder="Nama Lengkap" required></div>
-                    <div class="form-group"><input type="email" placeholder="Email Aktif" required></div>
-                    <div class="form-group"><input type="tel" placeholder="No. WhatsApp"></div>
-                    <div class="form-group"><select>
-                            <option>Pilih Aktivitas</option>
-                            <option>Petani Sehari</option>
-                            <option>Batik & Gamelan</option>
-                            <option>Jelajah Rasa</option>
-                            <option>Sunset & Cerita</option>
-                        </select></div>
-                    <div class="form-group"><input type="date" placeholder="Tanggal Kunjungan"></div>
-                    <div class="form-group"><textarea rows="3"
-                            placeholder="Catatan khusus (alergi, kebutuhan khusus)"></textarea></div>
-                    <button type="submit">Kirim Reservasi <i class="fas fa-calendar-check"></i></button>
-                    <p style="font-size:0.8rem; text-align:center; margin-top:15px;">Tim kami akan konfirmasi dalam 1x24
-                        jam</p>
+                    <div class="form-group"><input type="text" id="fullName" placeholder="Nama Lengkap" required></div>
+                    <div class="form-group"><input type="email" id="email" placeholder="Email Aktif" required></div>
+                    <div class="form-group"><input type="tel" id="phone" placeholder="No. WhatsApp" required></div>
+                    <div class="form-group"><select id="activity"><option value="">Pilih Aktivitas</option><option>Belajar Media Menanam</option><option>Pertanian</option><option>Tangkap Ikan</option><option>Membatik</option><option>Belajar Tari</option><option>Belajar Karawitan</option><option>Masak Tradisional</option><option>Kuda Lumping</option></select></div>
+                    <div class="form-group"><input type="date" id="date"></div>
+                    <div class="form-group"><textarea id="notes" rows="3" placeholder="Catatan khusus (jumlah peserta, dll)"></textarea></div>
+                    <button type="submit"><i class="fab fa-whatsapp"></i> Kirim Reservasi via WhatsApp</button>
                 </form>
             </div>
-            <!-- PETA INTERAKTIF -->
             <div id="map"></div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div>
-                    <h3 style="color:#E8DBCB;">Desa Wisata Brayut</h3>
-                    <p>Kearifan lokal & kehangatan pedesaan</p>
-                </div>
-                <div><i class="fas fa-map-marker-alt"></i> Dusun Brayut, Pendowoharjo, Sleman, Yogyakarta<br><i
-                        class="fas fa-phone-alt"></i> +62 813 2854 6791</div>
-                <div class="social"><i class="fab fa-instagram"></i><i class="fab fa-facebook"></i><i
-                        class="fab fa-youtube"></i>
-                    <p>© 2025 Brayut, All rights reserved</p>
-                </div>
+                <div><h3 style="color:#E8DBCB;">Desa Wisata Brayut</h3><p>Kearifan lokal & kehangatan pedesaan</p></div>
+                <div><i class="fas fa-map-marker-alt"></i> Dusun Brayut, Pendowoharjo, Sleman, Yogyakarta<br><i class="fas fa-phone-alt"></i> +62 813 2854 6791</div>
+                <div class="social"><i class="fab fa-instagram"></i><i class="fab fa-facebook"></i><i class="fab fa-youtube"></i><p>© 2026 Desa Wisata Brayut</p></div>
             </div>
         </div>
     </footer>
 
-    <!-- WHATSAPP FLOATING BUTTON -->
-    <a href="https://wa.me/6281328546791?text=Halo%20saya%20tertarik%20dengan%20Desa%20Wisata%20Brayut" 
-       class="wa-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <!-- DARK MODE TOGGLE -->
+    <a href="https://wa.me/6281328546791" class="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <button id="darkModeToggle">🌙 Mode Gelap</button>
-
-    <!-- SCROLL TO TOP BUTTON -->
     <button id="scrollTopBtn">⬆️ Atas</button>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // ==================== NAVIGATION MOBILE ====================
+        // Mobile nav
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
         menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => navLinks.classList.remove('active'));
-        });
+        document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
 
-        // ==================== COUNTER STATS ====================
+        // Counter stats
         const counters = document.querySelectorAll('.stat-number');
         const speed = 180;
         const startCounters = () => {
@@ -947,9 +1509,7 @@
                     let current = parseFloat(counter.innerText);
                     const increment = target / speed;
                     if (current < target) {
-                        let newVal = current + increment;
-                        if (target >= 1000) counter.innerText = Math.ceil(newVal);
-                        else counter.innerText = newVal.toFixed(0);
+                        counter.innerText = Math.ceil(current + increment);
                         setTimeout(updateCount, 20);
                     } else {
                         counter.innerText = target.toLocaleString();
@@ -961,106 +1521,235 @@
         const statsSection = document.querySelector('#about + section');
         let counted = false;
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !counted) {
-                    startCounters();
-                    counted = true;
-                }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting && !counted) { startCounters(); counted = true; } });
         }, { threshold: 0.3 });
         if (statsSection) observer.observe(statsSection);
 
-        // ==================== SWIPER CAROUSEL ====================
-        new Swiper('.packageSwiper', {
-            loop: true,
+        // Galeri Tabs
+        const tabs = document.querySelectorAll('.gallery-tab');
+        const categories = document.querySelectorAll('.gallery-category');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const category = tab.getAttribute('data-category');
+                categories.forEach(cat => cat.classList.remove('active-category'));
+                if (category === 'semua') {
+                    document.getElementById('gallery-semua').classList.add('active-category');
+                } else {
+                    document.getElementById(`gallery-${category}`).classList.add('active-category');
+                }
+            });
+        });
+
+        // Swiper Package
+        const packageSwiper = new Swiper('.packageSwiper', {
             slidesPerView: 1,
             spaceBetween: 20,
+            loop: true,
             pagination: { el: '.swiper-pagination', clickable: true },
             navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-            breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+            breakpoints: { 640: { slidesPerView: 2 }, 992: { slidesPerView: 3 } },
+            autoplay: { delay: 4000, disableOnInteraction: false }
         });
 
-        // ==================== FORM ALERT ====================
-        document.getElementById('bookingForm').addEventListener('submit', (e) => {
+        // Swiper Layanan
+        const layananSwiper = new Swiper('.layananSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            pagination: { el: '.swiper-pagination', clickable: true },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            breakpoints: { 640: { slidesPerView: 2 }, 992: { slidesPerView: 3 } },
+            autoplay: { delay: 4000, disableOnInteraction: false }
+        });
+
+        // Data Homestay (21 Homestay)
+        const homestayData = [];
+        const homestayNames = [
+            "Homestay Mbah Surip", "Homestay Sawah Asri", "Homestay Omah Joglo", "Homestay Lereng Merapi",
+            "Homestay Bambu Hijau", "Homestay Keluarga", "Homestay Teratai", "Homestay Cempaka",
+            "Homestay Melati", "Homestay Kenanga", "Homestay Dahlia", "Homestay Anggrek",
+            "Homestay Bougenville", "Homestay Flamboyan", "Homestay Sakura", "Homestay Mawar",
+            "Homestay Kamboja", "Homestay Aster", "Homestay Lavender", "Homestay Tulip", "Homestay Gardenia"
+        ];
+        const locations = [
+            "Dusun Brayut", "Dusun Krajan", "Dusun Pulosari", "Dusun Ngepringan",
+            "Dusun Kiringan", "Dusun Jambu", "Dusun Miri", "Dusun Tegal",
+            "Dusun Gatak", "Dusun Kopen", "Dusun Ngemplak", "Dusun Karang",
+            "Dusun Plosokuning", "Dusun Sidoarum", "Dusun Banyuraden", "Dusun Sendang",
+            "Dusun Paker", "Dusun Karet", "Dusun Jatisari", "Dusun Klangon", "Dusun Tempel"
+        ];
+        const facilitiesList = [
+            ["WiFi", "AC", "TV", "Kamar Mandi"], ["WiFi", "Kipas", "Sarapan", "Parkir"],
+            ["AC", "TV", "Sarapan", "Kolam"], ["WiFi", "Kamar Mandi", "Sarapan", "Taman"],
+            ["Kipas", "Parkir", "Dapur", "WiFi"], ["AC", "TV", "WiFi", "Sarapan"],
+            ["Kamar Mandi", "Parkir", "WiFi", "Kipas"], ["Sarapan", "AC", "TV", "Taman"],
+            ["WiFi", "Parkir", "Dapur", "Kipas"], ["AC", "TV", "Kamar Mandi", "Sarapan"],
+            ["WiFi", "Kipas", "Parkir", "Taman"], ["AC", "Sarapan", "WiFi", "TV"],
+            ["Kamar Mandi", "WiFi", "Parkir", "Kipas"], ["TV", "AC", "Sarapan", "Kolam"],
+            ["WiFi", "Parkir", "Dapur", "Taman"], ["AC", "TV", "Kipas", "Sarapan"],
+            ["Kamar Mandi", "WiFi", "Parkir", "AC"], ["Sarapan", "TV", "Taman", "WiFi"],
+            ["AC", "Kamar Mandi", "Parkir", "TV"], ["WiFi", "Sarapan", "Kipas", "Taman"],
+            ["AC", "TV", "Sarapan", "Kamar Mandi"]
+        ];
+        const descriptions = [
+            "Homestay tradisional dengan pemandangan sawah indah", "Suasana pedesaan yang tenang dan asri",
+            "Bangunan joglo khas dengan fasilitas modern", "Berada di lereng Merapi, udara sejuk alami",
+            "Homestay dengan taman bambu yang rindang", "Cocok untuk liburan keluarga besar",
+            "Dekat dengan area persawahan", "Suasana tradisional dengan bunga cempaka",
+            "Homestay dengan taman melati wangi", "Berada di tengah kebun kenanga",
+            "Homestay dengan bunga dahlia di halaman", "Dekorasi bunga anggrek yang cantik",
+            "Homestay dengan taman bougenville", "Pemandangan bunga flamboyan yang indah",
+            "Nuansa Jepang dengan bunga sakura", "Taman mawar yang romantis",
+            "Dikelilingi bunga kamboja", "Hamparan bunga aster yang cantik",
+            "Suasana lavender yang menenangkan", "Taman bunga tulip warna-warni",
+            "Homestay dengan taman gardenia yang harum"
+        ];
+
+        for (let i = 1; i <= 21; i++) {
+            homestayData.push({
+                id: i,
+                name: homestayNames[i-1],
+                location: locations[i-1],
+                image: `https://picsum.photos/id/${80 + i}/400/250`,
+                price: 95000,
+                desc: descriptions[i-1],
+                facilities: facilitiesList[i-1]
+            });
+        }
+
+        const homestayWrapper = document.getElementById('homestayWrapper');
+        homestayData.forEach(hs => {
+            const facilitiesHtml = hs.facilities.map(f => `<span><i class="fas fa-check-circle"></i> ${f}</span>`).join('');
+            const cardHtml = `
+                <div class="swiper-slide">
+                    <div class="homestay-card">
+                        <img src="${hs.image}" alt="${hs.name}" loading="lazy">
+                        <div class="homestay-info">
+                            <h3>🏠 ${hs.name}</h3>
+                            <div class="homestay-location"><i class="fas fa-map-marker-alt"></i> ${hs.location}</div>
+                            <div class="homestay-desc">${hs.desc}</div>
+                            <div class="homestay-price">Rp ${hs.price.toLocaleString()} <small>/orang/malam</small></div>
+                            <div class="homestay-facility">${facilitiesHtml}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            homestayWrapper.insertAdjacentHTML('beforeend', cardHtml);
+        });
+
+        const homestaySwiper = new Swiper('.homestaySwiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            pagination: { el: '.swiper-pagination', clickable: true },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            breakpoints: { 640: { slidesPerView: 2 }, 992: { slidesPerView: 3 } },
+            autoplay: { delay: 4000, disableOnInteraction: false }
+        });
+
+        // Form WhatsApp
+        const bookingForm = document.getElementById('bookingForm');
+        const WA_NUMBER = '6281328546791';
+        bookingForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Terima kasih! Tim Desa Wisata Brayut akan segera menghubungi Anda.');
-            e.target.reset();
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const activity = document.getElementById('activity').value;
+            const date = document.getElementById('date').value;
+            const notes = document.getElementById('notes').value.trim();
+            if (!fullName || !email || !phone || !activity || !date) {
+                alert('❌ Semua field wajib diisi!');
+                return;
+            }
+            let formattedDate = new Date(date).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            let message = `*📋 RESERVASI DESA WISATA BRAYUT*%0A%0A`;
+            message += `*Nama:* ${fullName}%0A*Email:* ${email}%0A*No. WhatsApp:* ${phone}%0A`;
+            message += `*Aktivitas:* ${activity}%0A*Tanggal:* ${formattedDate}%0A`;
+            if (notes) message += `*Catatan:* ${notes}%0A`;
+            message += `%0ATerima kasih 🙏`;
+            window.open(`https://wa.me/${WA_NUMBER}?text=${message}`, '_blank');
+            bookingForm.reset();
+            setTimeout(() => alert('✅ Silakan kirim pesan di WhatsApp'), 500);
         });
 
-        // ==================== PETA INTERAKTIF (LEAFLET) ====================
-        // Koordinat sekitar Dusun Brayut, Sleman (dekat dengan titik referensi)
+        // Map
         const map = L.map('map').setView([-7.703, 110.355], 14);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; CartoDB',
-            subdomains: 'abcd',
-            maxZoom: 19
-        }).addTo(map);
-        L.marker([-7.703, 110.355]).addTo(map)
-            .bindPopup('<b>📍 Desa Wisata Brayut</b><br>Dusun Brayut, Pendowoharjo, Sleman, Yogyakarta')
-            .openPopup();
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap', subdomains: 'abcd' }).addTo(map);
+        L.marker([-7.703, 110.355]).addTo(map).bindPopup('<b>📍 Desa Wisata Brayut</b>').openPopup();
 
-        // ==================== DARK MODE TOGGLE ====================
+        // Dark Mode
         const darkBtn = document.getElementById('darkModeToggle');
         darkBtn.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
             localStorage.setItem('brayut-theme', isDark ? 'dark' : 'light');
             darkBtn.innerHTML = isDark ? '☀️ Mode Terang' : '🌙 Mode Gelap';
-            // Update peta tile layer biar lebih matching (opsional)
-            if (isDark) {
-                map.eachLayer(layer => {
-                    if (layer instanceof L.TileLayer) {
-                        map.removeLayer(layer);
-                    }
-                });
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; CartoDB',
-                    subdomains: 'abcd'
-                }).addTo(map);
-            } else {
-                map.eachLayer(layer => {
-                    if (layer instanceof L.TileLayer) {
-                        map.removeLayer(layer);
-                    }
-                });
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; CartoDB',
-                    subdomains: 'abcd'
-                }).addTo(map);
-            }
+            map.eachLayer(layer => { if (layer instanceof L.TileLayer) map.removeLayer(layer); });
+            L.tileLayer(isDark ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OSM', subdomains: 'abcd' }).addTo(map);
         });
-        // Load saved theme
         if (localStorage.getItem('brayut-theme') === 'dark') {
             document.body.classList.add('dark-mode');
             darkBtn.innerHTML = '☀️ Mode Terang';
-            // ubah tile map ke dark
-            setTimeout(() => {
-                map.eachLayer(layer => {
-                    if (layer instanceof L.TileLayer) {
-                        map.removeLayer(layer);
-                    }
-                });
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; CartoDB',
-                    subdomains: 'abcd'
-                }).addTo(map);
-            }, 100);
         }
 
-        // ==================== SCROLL TO TOP BUTTON ====================
+        // Scroll Top
         const scrollBtn = document.getElementById('scrollTopBtn');
-        window.onscroll = () => {
-            if (window.scrollY > 300) {
-                scrollBtn.style.display = 'block';
-            } else {
-                scrollBtn.style.display = 'none';
-            }
-        };
-        scrollBtn.onclick = () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
+        window.onscroll = () => scrollBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+        scrollBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Modal Artikel
+        const modal = document.getElementById('articleModal');
+        const modalBody = document.getElementById('modalBody');
+        const closeModal = document.querySelector('.close-modal');
+        const fullArticleHTML = `
+            <img src="pict/artikel.jpeg" alt="Mahasiswa UNY Digitalisasi Brayut">
+            <h2>Mahasiswa Pendidikan Sosiologi UNY Wujudkan Aksi Sosial: Digitalisasi Desa Wisata Brayut Melalui Website</h2>
+            <p><strong>Brayut, Yogyakarta</strong> – Dalam upaya mendukung pencapaian SDGs Desa 18 (Kelembagaan Dinamis dan Budaya Desa Adaptif), sekelompok mahasiswa dari Program Studi Pendidikan Sosiologi, Fakultas Ilmu Sosial dan Ilmu Politik, Universitas Negeri Yogyakarta (UNY) telah meluncurkan sebuah aksi sosial nyata berupa pembuatan website resmi untuk <strong>Desa Wisata Brayut</strong>.</p>
+            <p>Kegiatan yang berlangsung selama tiga minggu ini merupakan bagian dari proyek mata kuliah Pendidikan dan Pembangunan Berkelanjutan. Tim yang terdiri dari Muhammad Naufal Reski Hidayah, Pinkan Naufana Afifah, Faisa Ayuningtyas, dan Candra Nur Aini ini tidak hanya membangun platform digital, tetapi juga menghadirkan solusi berkelanjutan bagi pengelolaan wisata berbasis komunitas.</p>
+            
+            <h3>📌 Latar Belakang: Kebutuhan Mendesak akan Informasi Digital</h3>
+            <p>Berdasarkan hasil observasi di lapangan, Desa Wisata Brayut masih menghadapi sejumlah tantangan digital, antara lain:</p>
+            <ul>
+                <li>Belum adanya website resmi sebagai pusat informasi terpadu.</li>
+                <li>Informasi jadwal kesenian, paket aktivitas, homestay, dan produk UMKM masih tersebar secara manual melalui brosur, WhatsApp, mulut ke mulut, dan Instagram.</li>
+                <li>Wisatawan kesulitan mengakses peta lokasi, agenda kegiatan, dan informasi budaya secara cepat dan akurat.</li>
+                <li>Partisipasi masyarakat dalam promosi budaya masih rendah karena keterbatasan akses digital.</li>
+            </ul>
+            <p>Menyadari kondisi tersebut, mahasiswa UNY bergerak cepat menghadirkan solusi digital yang inovatif dan partisipatif.</p>
+            
+            <h3>🌐 Solusi: Website Desa Wisata Brayut sebagai Pusat Informasi dan Promosi</h3>
+            <p>Website yang dikembangkan oleh tim ini menyediakan berbagai fitur unggulan, antara lain: Profil desa dan deskripsi wisata, Agenda budaya dan jadwal kesenian, Paket wisata lengkap, Peta interaktif lokasi, Galeri foto dan video profil desa, Statistik kunjungan dan penilaian pengunjung, Berita terbaru serta sistem informasi desa, Fitur partisipasi warga untuk mengusulkan kegiatan budaya dan pembangunan.</p>
+            <p>Dengan adanya website ini, diharapkan Desa Wisata Brayut dapat menjangkau wisatawan lebih luas, meningkatkan kunjungan, sekaligus menggerakkan ekonomi desa.</p>
+            
+            <h3>📖 Pelatihan dan Keberlanjutan</h3>
+            <p>Agar proyek ini tidak berhenti setelah peluncuran, tim mahasiswa juga memberikan <strong>pelatihan kepada 9 orang pengurus desa</strong> (perangkat desa dan Pokdarwis) untuk mengelola website secara mandiri. Buku panduan pengelolaan pun disusun sebagai referensi. Ke depan, website ini akan dikelola secara bergilir oleh kelembagaan desa.</p>
+            
+            <h3>🙏 Apresiasi dan Harapan</h3>
+            <p>“Kami sangat terbantu dengan adanya website ini. Selama ini informasi wisata kami masih serba manual. Sekarang, wisatawan bisa lebih mudah mengakses jadwal kesenian dan paket wisata,” ujar salah satu pengelola Desa Wisata Brayut.</p>
+            
+            <h3>🌍 Kunjungi Website Resmi Desa Wisata Brayut</h3>
+            <p>Website resmi Desa Wisata Brayut kini telah dapat diakses oleh masyarakat umum. Wisatawan yang ingin berkunjung dapat menemukan informasi lengkap mengenai agenda budaya, paket wisata, homestay, serta produk UMKM unggulan desa.</p>
+            <p>Dengan semangat kolaborasi antara dunia akademik dan masyarakat, Desa Wisata Brayut optimis dapat mewujudkan kelembagaan yang dinamis dan budaya desa yang adaptif terhadap perubahan zaman.</p>
+            <hr>
+            <p><strong>Untuk informasi lebih lanjut, silakan hubungi:</strong> Tim Digitalisasi Desa Wisata Brayut – Prodi Pendidikan Sosiologi UNY</p>
+            <div class="hashtag">#SDGsDesa #DesaWisataBrayut #UNY #DigitalisasiDesa #AksiSosial #PendidikanSosiologi</div>
+        `;
+
+        function openFullArticle() {
+            modalBody.innerHTML = fullArticleHTML;
+            modal.style.display = 'block';
+        }
+
+        document.getElementById('readMoreBtn').addEventListener('click', openFullArticle);
+        document.getElementById('mainArticle').addEventListener('click', (e) => {
+            if (!e.target.classList.contains('btn-article')) openFullArticle();
+        });
+        closeModal.onclick = () => modal.style.display = 'none';
+        window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
     </script>
 </body>
 
 </html>
-
